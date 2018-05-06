@@ -1,7 +1,0 @@
-{
-  "env": {
-    "jest": true
-  },
-  "plugins": ["prettier", "react"],
-  "extends": ["airbnb-base", "prettier", "plugin:react/recommended"]
-}

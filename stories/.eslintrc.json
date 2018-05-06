@@ -4,9 +4,6 @@
   },
   "rules": {
     "import/no-extraneous-dependencies": 0,
-    "arrow-body-style": 0,
     "no-console": 0
-  },
-  "plugins": ["prettier", "react"],
-  "extends": ["airbnb-base", "prettier", "plugin:react/recommended"]
+  }
 }
