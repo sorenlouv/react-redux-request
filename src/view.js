@@ -99,7 +99,11 @@ ReduxRequestView.propTypes = {
   id: PropTypes.string.isRequired,
   prevHashedArgs: PropTypes.string,
   render: PropTypes.func,
-  result: PropTypes.object,
+  result: PropTypes.shape({
+    status: PropTypes.string,
+    data: PropTypes.object,
+    error: PropTypes.object
+  }),
   shouldInvoke: PropTypes.bool.isRequired
 };
 
