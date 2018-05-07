@@ -1,13 +1,23 @@
 {
   "plugins": [
-    "transform-object-rest-spread",
+    "@babel/plugin-proposal-object-rest-spread",
     [
-      "transform-runtime",
+      "@babel/plugin-transform-runtime",
       {
         "polyfill": false,
-        "regenerator": true
+        "regenerator": true,
+        "moduleName": "@babel/runtime"
       }
     ]
   ],
-  "presets": ["env", "stage-0", "react"]
+  "presets": [
+    "@babel/env",
+    [
+      "@babel/preset-stage-0",
+      {
+        "decoratorsLegacy": true
+      }
+    ],
+    "@babel/react"
+  ]
 }

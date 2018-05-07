@@ -2,3 +2,4 @@ test/
 stories/
 .storybook/
 .vscode/
+.babelrc
