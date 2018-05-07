@@ -1,3 +1,5 @@
+Redux is great for handling application state but can result in a lot of boilerplate when it comes to data fetching. This component aims to reduce this boilerplate, and help you keep your components stateless.
+
 ### Install
 
 ```
