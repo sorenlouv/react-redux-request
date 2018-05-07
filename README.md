@@ -7,8 +7,9 @@ npm install @sqren/redux-request
 ### Getting started
 
 ```js
+import { ReduxRequest, reduxRequestReducer } from '@sqren/redux-request';
+
 // Add reduxRequestReducer to your store
-import { reduxRequestReducer } from '@sqren/redux-request';
 const store = createStore((state = {}, action) => {
   return {
     ...state,
