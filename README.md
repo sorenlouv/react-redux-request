@@ -34,4 +34,10 @@ return (
 );
 ```
 
-See more examples in [https://github.com/sqren/redux-request/tree/master/stories](stories/)
+### Run examples locally
+```
+npm run storybook
+```
+Open [localhost:6006](http://localhost:6006) in your browser
+
+All examples are located in [https://github.com/sqren/redux-request/tree/master/stories](stories/)
