@@ -46,7 +46,7 @@ ReduxRequest.propTypes = {
   id: PropTypes.string.isRequired,
   render: PropTypes.func,
   selector: PropTypes.func,
-  shouldInvoke: PropTypes.bool.isRequired
+  shouldInvoke: PropTypes.bool
 };
 
 ReduxRequest.defaultProps = {

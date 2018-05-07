@@ -1,14 +1,11 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { ReduxRequest, reduxRequestReducer } from '../src';
 
-const store = createStore((state = {}, action) => {
-  return {
-    ...state,
-    reduxRequest: reduxRequestReducer(state.reduxRequest, action)
-  };
-});
+const reducers = combineReducers({ reduxRequest: reduxRequestReducer });
+const store = createStore(reducers, applyMiddleware(logger));
 
 function fetchPost(postId) {
   return fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`).then(

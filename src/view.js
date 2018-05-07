@@ -67,6 +67,11 @@ export class ReduxRequestView extends React.Component {
   }
 
   componentWillUnmount() {
+    const { dispatch, id } = this.props;
+    dispatch({
+      id,
+      type: ACTION_TYPES.UNMOUNT
+    });
     this.fetchId = null;
   }
 
@@ -101,8 +106,8 @@ ReduxRequestView.propTypes = {
   render: PropTypes.func,
   result: PropTypes.shape({
     status: PropTypes.string,
-    data: PropTypes.object,
-    error: PropTypes.object
+    data: PropTypes.any,
+    error: PropTypes.any
   }),
   shouldInvoke: PropTypes.bool.isRequired
 };

@@ -1,14 +1,12 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import logger from 'redux-logger';
 import { Provider } from 'react-redux';
+import { get } from 'lodash';
 import { ReduxRequest, reduxRequestReducer } from '../src';
 
-const store = createStore((state = {}, action) => {
-  return {
-    ...state,
-    reduxRequest: reduxRequestReducer(state.reduxRequest, action)
-  };
-}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const reducers = combineReducers({ reduxRequest: reduxRequestReducer });
+const store = createStore(reducers, applyMiddleware(logger));
 
 export default function SelectorExample() {
   return (
@@ -20,19 +18,14 @@ export default function SelectorExample() {
           )
         }
         id="post-1"
-        selector={(state, props) => {
-          return state.reduxRequest[props.id];
-        }}
-        render={({ status, data, error }) => {
-          console.log(status);
-          return (
-            <div>
-              <div>Status: {status}</div>
-              <pre>{JSON.stringify(data, null, 4)}</pre>
-              <pre>{error && error.message}</pre>
-            </div>
-          );
-        }}
+        selector={(state, props) => get(state.reduxRequest[props.id], 'data')}
+        render={({ status, data, error }) => (
+          <div>
+            <div>Status: {status}</div>
+            <pre>{JSON.stringify(data, null, 4)}</pre>
+            <pre>{error && error.message}</pre>
+          </div>
+        )}
       />
     </Provider>
   );

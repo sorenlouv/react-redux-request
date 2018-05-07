@@ -8,7 +8,8 @@
   "rules": {
     "no-console": 0,
     "import/prefer-default-export": 0,
-    "arrow-body-style": 0
+    "arrow-body-style": 0,
+    "one-var": ["error", { "initialized": "never", "uninitialized": "always" }]
   },
   "plugins": ["prettier", "react"],
   "extends": ["airbnb-base", "prettier", "plugin:react/recommended"]

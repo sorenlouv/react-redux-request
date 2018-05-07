@@ -183,7 +183,7 @@ describe('ReduxRequest', () => {
     });
   });
 
-  describe('shouldInvoke', () => {
+  describe('when shouldInvoke is false', () => {
     it('should not call fnSpy', () => {
       const fnSpy = jest.fn(resolvedPromise);
       shallow(
@@ -198,6 +198,29 @@ describe('ReduxRequest', () => {
       );
 
       expect(fnSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('when component unmounts', () => {
+    it('should dispatch an unmount action', () => {
+      const fnSpy = jest.fn(resolvedPromise);
+      const wrapper = shallow(
+        <ReduxRequestView
+          args={['myInitialArg']}
+          shouldInvoke={false}
+          fn={resolvedPromise}
+          hashedArgs="myHashedArgs"
+          id="myId"
+          dispatch={fnSpy}
+        />
+      );
+
+      expect(fnSpy).not.toHaveBeenCalled();
+      wrapper.unmount();
+      expect(fnSpy).toHaveBeenCalledWith({
+        id: 'myId',
+        type: 'REDUX_REQUEST_COMPONENT_UNMOUNT'
+      });
     });
   });
 });

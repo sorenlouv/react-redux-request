@@ -3,7 +3,8 @@ import { get } from 'lodash';
 export const ACTION_TYPES = {
   LOADING: 'REDUX_REQUEST_LOADING',
   SUCCESS: 'REDUX_REQUEST_SUCCESS',
-  FAILURE: 'REDUX_REQUEST_FAILURE'
+  FAILURE: 'REDUX_REQUEST_FAILURE',
+  UNMOUNT: 'REDUX_REQUEST_COMPONENT_UNMOUNT'
 };
 
 export const STATUS = {
@@ -39,6 +40,13 @@ export function reduxRequestReducer(state = {}, action) {
           error: error || get(state[id], 'error'),
           hashedArgs
         }
+      };
+    }
+    case ACTION_TYPES.UNMOUNT: {
+      const { id } = action;
+      return {
+        ...state,
+        [id]: state[id].status === STATUS.SUCCESS ? state[id] : {}
       };
     }
     default:
