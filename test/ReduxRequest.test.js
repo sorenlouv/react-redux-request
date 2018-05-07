@@ -10,7 +10,7 @@ configure({ adapter: new Adapter() });
 const resolvedPromise = (...args) => Promise.resolve(...args);
 
 describe('ReduxRequest', () => {
-  describe('When mounting with empty result', () => {
+  describe('When mounting with empty selectorResult', () => {
     let fnSpy, renderSpy, dispatchSpy, wrapper;
 
     beforeEach(() => {
@@ -59,11 +59,7 @@ describe('ReduxRequest', () => {
 
       it('should render undefined', () => {
         expect(renderSpy).toHaveBeenCalledTimes(1);
-        expect(renderSpy).toHaveBeenCalledWith({
-          data: undefined,
-          error: undefined,
-          status: undefined
-        });
+        expect(renderSpy).toHaveBeenCalledWith(undefined);
       });
     });
 
@@ -76,10 +72,10 @@ describe('ReduxRequest', () => {
 
         wrapper.setProps({
           prevHashedArgs: 'myHashedArgs',
-          result: {
+          hashedArgs: 'myHashedArgs',
+          selectorResult: {
             status: STATUS.SUCCESS,
-            data: 'myData',
-            hashedArgs: 'myHashedArgs'
+            data: 'myData'
           }
         });
       });
@@ -117,7 +113,7 @@ describe('ReduxRequest', () => {
           id="myId"
           dispatch={dispatchSpy}
           render={renderSpy}
-          result={{
+          selectorResult={{
             status: STATUS.SUCCESS,
             data: 'myData'
           }}

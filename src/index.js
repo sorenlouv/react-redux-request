@@ -4,14 +4,15 @@ import hash from 'object-hash/index';
 import { get } from 'lodash';
 import { ReduxRequestView } from './view';
 
+// export reducer
 export { reduxRequestReducer } from './reducer';
 
 const mapStateToProps = (state, ownProps) => {
   const { args, id, selector } = ownProps;
   const hashedArgs = hash(args);
-  let data;
+  let selectorResult;
   try {
-    data = selector(state, { id });
+    selectorResult = selector(state, { id });
   } catch (e) {
     console.error(`The selector for "ReduxRequest#${id}" threw an error:\n`, e);
     return {
@@ -20,15 +21,10 @@ const mapStateToProps = (state, ownProps) => {
     };
   }
 
-  const result = {
-    ...state.reduxRequest[id],
-    data
-  };
-
   return {
-    prevHashedArgs: result.hashedArgs,
+    prevHashedArgs: get(state.reduxRequest[id], 'hashedArgs'),
     hashedArgs,
-    result
+    selectorResult
   };
 };
 
@@ -51,5 +47,5 @@ ReduxRequest.propTypes = {
 
 ReduxRequest.defaultProps = {
   args: [],
-  selector: (state, props) => get(state.reduxRequest[props.id], 'data')
+  selector: (state, props) => state.reduxRequest[props.id]
 };

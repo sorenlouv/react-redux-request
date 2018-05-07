@@ -2,7 +2,6 @@ import React from 'react';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
-import { get } from 'lodash';
 import { ReduxRequest, reduxRequestReducer } from '../src';
 
 const reducers = combineReducers({ reduxRequest: reduxRequestReducer });
@@ -18,7 +17,7 @@ export default function SelectorExample() {
           )
         }
         id="post-1"
-        selector={(state, props) => get(state.reduxRequest[props.id], 'data')}
+        selector={(state, props) => state.reduxRequest[props.id]}
         render={({ status, data, error }) => (
           <div>
             <div>Status: {status}</div>

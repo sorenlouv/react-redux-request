@@ -63,7 +63,7 @@ export class ReduxRequestView extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.result !== nextProps.result;
+    return this.props.selectorResult !== nextProps.selectorResult;
   }
 
   componentWillUnmount() {
@@ -76,13 +76,13 @@ export class ReduxRequestView extends React.Component {
   }
 
   render() {
-    if (this.props.hasError) {
+    const { hasError, render, selectorResult } = this.props;
+    if (hasError) {
       return null;
     }
 
-    const { status, data, error } = this.props.result;
     try {
-      return this.props.render({ status, data, error });
+      return render(selectorResult);
     } catch (e) {
       console.error(
         `The render method of "ReduxRequest#${
@@ -104,11 +104,7 @@ ReduxRequestView.propTypes = {
   id: PropTypes.string.isRequired,
   prevHashedArgs: PropTypes.string,
   render: PropTypes.func,
-  result: PropTypes.shape({
-    status: PropTypes.string,
-    data: PropTypes.any,
-    error: PropTypes.any
-  }),
+  selectorResult: PropTypes.any,
   shouldInvoke: PropTypes.bool.isRequired
 };
 
@@ -116,6 +112,6 @@ ReduxRequestView.defaultProps = {
   args: [],
   hasError: false,
   render: () => {},
-  result: {},
+  selectorResult: {},
   shouldInvoke: true
 };

@@ -46,7 +46,7 @@ export function reduxRequestReducer(state = {}, action) {
       const { id } = action;
       return {
         ...state,
-        [id]: state[id].status === STATUS.SUCCESS ? state[id] : {}
+        [id]: get(state[id], 'status') === STATUS.SUCCESS ? state[id] : {}
       };
     }
     default:
