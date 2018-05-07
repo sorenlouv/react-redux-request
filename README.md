@@ -46,7 +46,8 @@ All examples are located in [https://github.com/sqren/redux-request/tree/master/
 ### API
 
 #### args: array
-A list of arguments that will be applied to `fn`
+A list of arguments that will be applied to `fn`.
+
 Example: `['a', 'b']`
 
 #### fn: func
