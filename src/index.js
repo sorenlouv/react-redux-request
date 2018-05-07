@@ -42,8 +42,11 @@ export const ReduxRequest = connect(mapStateToProps, mapDispatchToProps)(
 
 ReduxRequest.propTypes = {
   args: PropTypes.array,
+  fn: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-  selector: PropTypes.func
+  render: PropTypes.func,
+  selector: PropTypes.func,
+  shouldInvoke: PropTypes.bool.isRequired
 };
 
 ReduxRequest.defaultProps = {
