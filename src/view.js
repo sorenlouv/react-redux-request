@@ -62,10 +62,6 @@ export class ReduxRequestView extends React.Component {
     maybeFetchData(nextProps, this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.selectorResult !== nextProps.selectorResult;
-  }
-
   componentWillUnmount() {
     const { dispatch, id } = this.props;
     dispatch({

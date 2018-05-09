@@ -4,6 +4,11 @@ import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { ReduxRequest, reduxRequestReducer } from '../src';
 
+/*
+ * This example demonstrates how you can pass arguments to th fn callback
+ * The component will re-render whenever the arguments change.
+ */
+
 const reducers = combineReducers({ reduxRequest: reduxRequestReducer });
 const store = createStore(reducers, applyMiddleware(logger));
 

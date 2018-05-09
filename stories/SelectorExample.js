@@ -4,6 +4,11 @@ import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { ReduxRequest, reduxRequestReducer } from '../src';
 
+/*
+ * This example demonstrates how you can use selectors to return a custom response to the render callback
+ * The selector will be called with the entire store state, which allows you to return any part of the state you want
+ */
+
 const reducers = combineReducers({ reduxRequest: reduxRequestReducer });
 const store = createStore(reducers, applyMiddleware(logger));
 

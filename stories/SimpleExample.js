@@ -4,6 +4,10 @@ import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { ReduxRequest, reduxRequestReducer } from '../src';
 
+/*
+ * This example demonstrates how you can easily fetch the result of an endpoint, and render it
+ */
+
 const reducers = combineReducers({ reduxRequest: reduxRequestReducer });
 const store = createStore(reducers, applyMiddleware(logger));
 

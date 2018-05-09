@@ -57,9 +57,9 @@ describe('ReduxRequest', () => {
         ]);
       });
 
-      it('should render undefined', () => {
+      it('should render defaultValue', () => {
         expect(renderSpy).toHaveBeenCalledTimes(1);
-        expect(renderSpy).toHaveBeenCalledWith(undefined);
+        expect(renderSpy).toHaveBeenCalledWith({});
       });
     });
 
@@ -170,11 +170,10 @@ describe('ReduxRequest', () => {
       });
 
       it('should render SUCCESS', () => {
-        expect(renderSpy).toHaveBeenCalledTimes(1);
-        expect(renderSpy).toHaveBeenCalledWith({
-          data: 'myData',
-          status: STATUS.SUCCESS
-        });
+        expect(renderSpy.mock.calls).toEqual([
+          [{ data: 'myData', status: 'SUCCESS' }],
+          [{ data: 'myData', status: 'SUCCESS' }]
+        ]);
       });
     });
   });

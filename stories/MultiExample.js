@@ -4,6 +4,11 @@ import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import { ReduxRequest, reduxRequestReducer } from '../src';
 
+/*
+ * This example demonstrates how you can render multiple ReduxRequest on one page. They will render independently of each other
+ * Please note that you should give them unique id's to avoid them writing to the same namespace in the redux store
+ */
+
 const reducers = combineReducers({ reduxRequest: reduxRequestReducer });
 const store = createStore(reducers, applyMiddleware(logger));
 
