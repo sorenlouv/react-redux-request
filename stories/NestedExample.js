@@ -25,26 +25,26 @@ async function fetchPost(postId, ms = 0) {
 export default function MultiExample() {
   return (
     <Provider store={store}>
-      <div>
-        <ReduxRequest
-          fn={postId => fetchPost(postId, 2000)}
-          id="post-1"
-          args={[1]}
-          render={post1 => (
-            <ReduxRequest
-              fn={fetchPost}
-              id="post-2"
-              args={[2]}
-              render={post2 => (
-                <div>
-                  <pre>{JSON.stringify(post1, null, 4)}</pre>
-                  <pre>{JSON.stringify(post2, null, 4)}</pre>
-                </div>
-              )}
-            />
-          )}
-        />
-      </div>
+      <ReduxRequest
+        fn={postId => fetchPost(postId, 2000)}
+        id="post-1"
+        args={[1]}
+        render={post1 => (
+          <ReduxRequest
+            fn={fetchPost}
+            id="post-2"
+            args={[2]}
+            render={post2 => (
+              <div>
+                <div>Status: {post1.status}</div>
+                <pre>{JSON.stringify(post1.data, null, 4)}</pre>
+                <div>Status: {post2.status}</div>
+                <pre>{JSON.stringify(post2.data, null, 4)}</pre>
+              </div>
+            )}
+          />
+        )}
+      />
     </Provider>
   );
 }

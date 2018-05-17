@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { uniqueId } from 'lodash';
 import { ACTION_TYPES } from './reducer';
+
+let uniqueId = 0;
 
 async function maybeFetchData(
   {
@@ -28,7 +29,7 @@ async function maybeFetchData(
     hashedArgs,
     type: ACTION_TYPES.LOADING
   });
-  const fetchId = uniqueId();
+  const fetchId = ++uniqueId;
   ctx.fetchId = fetchId;
   try {
     const data = await fn(...args);

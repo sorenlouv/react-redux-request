@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import hash from 'object-hash/index';
-import { get } from 'lodash';
+import get from 'lodash.get';
 import { ReduxRequestView } from './view';
 
 // export reducer
