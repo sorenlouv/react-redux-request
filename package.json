@@ -13,7 +13,7 @@
     "lint": "eslint ./src ./stories ./test",
     "publish-dry-run": "tar -tf $(npm pack)",
     "prepublish": "npm run browserify",
-    "browserify": "mkdir -p dist && browserify --standalone myModuleName ./src/index.js >> dist/index.js",
+    "browserify": "mkdir -p dist && browserify --standalone ReduxRequest ./src/index.js >> dist/index.js",
     "start": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
