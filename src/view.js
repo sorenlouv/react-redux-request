@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { ACTION_TYPES } from './reducer';
 
 let uniqueId = 0;
+function getUniqueId() {
+  uniqueId += 1;
+  return uniqueId;
+}
 
 async function maybeFetchData(
   {
@@ -29,7 +33,7 @@ async function maybeFetchData(
     hashedArgs,
     type: ACTION_TYPES.LOADING
   });
-  const fetchId = ++uniqueId;
+  const fetchId = getUniqueId();
   ctx.fetchId = fetchId;
   try {
     const data = await fn(...args);
@@ -55,12 +59,12 @@ async function maybeFetchData(
 }
 
 export class ReduxRequestView extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     maybeFetchData(this.props, this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    maybeFetchData(nextProps, this);
+  componentDidUpdate() {
+    maybeFetchData(this.props, this);
   }
 
   componentWillUnmount() {
