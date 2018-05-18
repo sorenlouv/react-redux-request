@@ -178,13 +178,13 @@ describe('ReduxRequest', () => {
     });
   });
 
-  describe('when shouldInvoke is false', () => {
+  describe('when preventFetch is true', () => {
     it('should not call fnSpy', () => {
       const fnSpy = jest.fn(resolvedPromise);
       shallow(
         <ReduxRequestView
           args={['myInitialArg']}
-          shouldInvoke={false}
+          preventFetch
           fn={fnSpy}
           hashedArgs="myHashedArgs"
           id="myId"
@@ -199,20 +199,19 @@ describe('ReduxRequest', () => {
   describe('when component unmounts', () => {
     it('should dispatch an unmount action', () => {
       const fnSpy = jest.fn(resolvedPromise);
+      const dispatchSpy = jest.fn();
       const wrapper = shallow(
         <ReduxRequestView
           args={['myInitialArg']}
-          shouldInvoke={false}
-          fn={resolvedPromise}
+          fn={fnSpy}
           hashedArgs="myHashedArgs"
           id="myId"
-          dispatch={fnSpy}
+          dispatch={dispatchSpy}
         />
       );
 
-      expect(fnSpy).not.toHaveBeenCalled();
       wrapper.unmount();
-      expect(fnSpy).toHaveBeenCalledWith({
+      expect(dispatchSpy).toHaveBeenCalledWith({
         id: 'myId',
         type: 'REDUX_REQUEST_COMPONENT_UNMOUNT'
       });

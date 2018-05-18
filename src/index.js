@@ -40,9 +40,9 @@ ReduxRequest.propTypes = {
   args: PropTypes.array,
   fn: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  preventFetch: PropTypes.bool,
   render: PropTypes.func,
-  selector: PropTypes.func,
-  shouldInvoke: PropTypes.bool
+  selector: PropTypes.func
 };
 
 ReduxRequest.defaultProps = {

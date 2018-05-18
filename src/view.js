@@ -12,17 +12,17 @@ async function maybeFetchData(
   {
     args,
     dispatch,
-    hasError,
     fn,
+    hasError,
     hashedArgs,
     id,
-    prevHashedArgs,
-    shouldInvoke
+    preventFetch,
+    prevHashedArgs
   },
   ctx = {}
 ) {
   const shouldFetchData =
-    shouldInvoke && prevHashedArgs !== hashedArgs && !hasError;
+    !preventFetch && prevHashedArgs !== hashedArgs && !hasError;
 
   if (!shouldFetchData) {
     return;
@@ -103,16 +103,16 @@ ReduxRequestView.propTypes = {
   hasError: PropTypes.bool,
   hashedArgs: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  preventFetch: PropTypes.bool.isRequired,
   prevHashedArgs: PropTypes.string,
   render: PropTypes.func,
-  selectorResult: PropTypes.any,
-  shouldInvoke: PropTypes.bool.isRequired
+  selectorResult: PropTypes.any
 };
 
 ReduxRequestView.defaultProps = {
   args: [],
   hasError: false,
+  preventFetch: false,
   render: () => {},
-  selectorResult: {},
-  shouldInvoke: true
+  selectorResult: {}
 };
