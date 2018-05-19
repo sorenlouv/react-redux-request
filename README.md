@@ -26,8 +26,7 @@ function getData() {
   );
 }
 
-// Render
-return (
+const App = () => (
   <Provider store={store}>
     <Request
       fn={getData}
