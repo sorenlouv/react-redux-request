@@ -1,6 +1,6 @@
 {
   "name": "react-redux-request",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "author": "Søren Louv-Jansen <sorenlouv@gmail.com>",
   "license": "MIT",
   "description": "Declarative way to fetch data in React. Responses are stored in Redux.",
