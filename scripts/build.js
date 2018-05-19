@@ -23,7 +23,7 @@ execSync(
 );
 
 execSync(
-  `rollup --config scripts/config.js --format umd --name ${packageNamePascal} --file dist/umd/${packageName}.js`
+  `BUILD_ENV=development rollup --config scripts/config.js --format umd --name ${packageNamePascal} --file dist/umd/${packageName}.js`
 );
 
 execSync(

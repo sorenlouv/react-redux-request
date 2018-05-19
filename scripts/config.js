@@ -2,11 +2,12 @@
 
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
+import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import { uglify } from 'rollup-plugin-uglify';
 import { minify } from 'uglify-es';
 
-const getPlugins = (isProduction = false) => {
+const getPlugins = env => {
   const plugins = [
     commonjs({
       include: /node_modules/
@@ -39,7 +40,15 @@ const getPlugins = (isProduction = false) => {
     })
   ];
 
-  if (isProduction) {
+  if (env) {
+    plugins.push(
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(env)
+      })
+    );
+  }
+
+  if (env === 'production') {
     plugins.push(uglify({}, minify));
   }
 
@@ -47,7 +56,7 @@ const getPlugins = (isProduction = false) => {
 };
 
 function getConfig() {
-  const isProduction = process.env.BUILD_ENV === 'production';
+  const env = process.env.BUILD_ENV;
   console.log('loklz');
   return {
     input: 'src/index.js',
@@ -58,7 +67,7 @@ function getConfig() {
       }
     },
     external: ['react', 'react-redux', 'crypto'],
-    plugins: getPlugins(isProduction)
+    plugins: getPlugins(env)
   };
 }
 
