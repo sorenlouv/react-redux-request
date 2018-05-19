@@ -3,6 +3,8 @@
   "version": "1.4.0",
   "author": "Søren Louv-Jansen <sorenlouv@gmail.com>",
   "license": "MIT",
+  "description": "Declarative way to fetch data in React. Responses are stored in Redux.",
+  "repository": "https://github.com/sqren/react-redux-request",
   "main": "dist/cjs/react-redux-request.js",
   "module": "dist/esm/react-redux-request.js",
   "unpkg": "dist/umd/react-redux-request.js",
