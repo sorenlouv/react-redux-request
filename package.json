@@ -12,7 +12,7 @@
     "build": "node ./scripts/build.js",
     "lint": "eslint ./src ./stories ./test",
     "prettier": "prettier \"./src/**/*.js\" \"./stories/**/*.js\" \"./test/**/*.js\" --write",
-    "prepublish": "build",
+    "prepublish": "npm run build",
     "publish-dry-run": "tar -tf $(npm pack)",
     "start": "start-storybook -p 6006",
     "test": "jest"
