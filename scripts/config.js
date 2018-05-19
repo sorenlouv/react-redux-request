@@ -8,11 +8,20 @@ import { uglify } from 'rollup-plugin-uglify';
 import { minify } from 'uglify-es';
 
 const getPlugins = env => {
-  const plugins = [
+  const plugins = [resolve()];
+
+  if (env) {
+    plugins.push(
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(env)
+      })
+    );
+  }
+
+  plugins.push(
     commonjs({
       include: /node_modules/
     }),
-    resolve(),
     babel({
       runtimeHelpers: true,
       exclude: 'node_modules/**',
@@ -38,15 +47,7 @@ const getPlugins = env => {
       ],
       babelrc: false
     })
-  ];
-
-  if (env) {
-    plugins.push(
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(env)
-      })
-    );
-  }
+  );
 
   if (env === 'production') {
     plugins.push(uglify({}, minify));
