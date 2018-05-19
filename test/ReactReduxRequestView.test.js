@@ -2,14 +2,14 @@ import React from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import { ReduxRequestView } from '../src/view';
+import { ReactReduxRequestView } from '../src/view';
 import { ACTION_TYPES, STATUS } from '../src/reducer';
 
 configure({ adapter: new Adapter() });
 
 const resolvedPromise = (...args) => Promise.resolve(...args);
 
-describe('ReduxRequest', () => {
+describe('ReactReduxRequestView', () => {
   describe('When mounting with empty selectorResult', () => {
     let fnSpy, renderSpy, dispatchSpy, wrapper;
 
@@ -19,7 +19,7 @@ describe('ReduxRequest', () => {
       dispatchSpy = jest.fn();
 
       wrapper = shallow(
-        <ReduxRequestView
+        <ReactReduxRequestView
           args={['myInitialArg']}
           dispatch={dispatchSpy}
           fn={fnSpy}
@@ -105,7 +105,7 @@ describe('ReduxRequest', () => {
       dispatchSpy = jest.fn();
 
       wrapper = shallow(
-        <ReduxRequestView
+        <ReactReduxRequestView
           args={['myInitialArg']}
           fn={fnSpy}
           prevHashedArgs="myHashedArgs"
@@ -182,7 +182,7 @@ describe('ReduxRequest', () => {
     it('should not call fnSpy', () => {
       const fnSpy = jest.fn(resolvedPromise);
       shallow(
-        <ReduxRequestView
+        <ReactReduxRequestView
           args={['myInitialArg']}
           preventFetch
           fn={fnSpy}
@@ -201,7 +201,7 @@ describe('ReduxRequest', () => {
       const fnSpy = jest.fn(resolvedPromise);
       const dispatchSpy = jest.fn();
       const wrapper = shallow(
-        <ReduxRequestView
+        <ReactReduxRequestView
           args={['myInitialArg']}
           fn={fnSpy}
           hashedArgs="myHashedArgs"

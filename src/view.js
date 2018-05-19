@@ -58,7 +58,7 @@ async function maybeFetchData(
   }
 }
 
-export class ReduxRequestView extends React.Component {
+export class ReactReduxRequestView extends React.Component {
   componentDidMount() {
     maybeFetchData(this.props, this);
   }
@@ -86,9 +86,7 @@ export class ReduxRequestView extends React.Component {
       return render(selectorResult);
     } catch (e) {
       console.error(
-        `The render method of "ReduxRequest#${
-          this.props.id
-        }" threw an error:\n`,
+        `The render method of "Request#${this.props.id}" threw an error:\n`,
         e
       );
       return null;
@@ -96,7 +94,7 @@ export class ReduxRequestView extends React.Component {
   }
 }
 
-ReduxRequestView.propTypes = {
+ReactReduxRequestView.propTypes = {
   args: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
   fn: PropTypes.func.isRequired,
@@ -109,7 +107,7 @@ ReduxRequestView.propTypes = {
   selectorResult: PropTypes.any
 };
 
-ReduxRequestView.defaultProps = {
+ReactReduxRequestView.defaultProps = {
   args: [],
   hasError: false,
   preventFetch: false,

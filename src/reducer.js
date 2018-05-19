@@ -26,7 +26,7 @@ function getStatus(type) {
   }
 }
 
-export function reduxRequestReducer(state = {}, action) {
+export function reducer(state = {}, action) {
   switch (action.type) {
     case ACTION_TYPES.LOADING:
     case ACTION_TYPES.SUCCESS:

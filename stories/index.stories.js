@@ -8,7 +8,7 @@ import SelectorExample from './SelectorExample';
 import UnmountExample from './UnmountExample';
 import NestedExample from './NestedExample';
 
-storiesOf('ReduxRequest', module)
+storiesOf('Request', module)
   .add('simplest', () => <SimpleExample />)
   .add('passing arguments to fn', () => <ArgsExample />)
   .add('multiple components', () => <MultiExample />)

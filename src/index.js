@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import hash from 'object-hash/index';
 import get from 'lodash.get';
-import { ReduxRequestView } from './view';
+import { ReactReduxRequestView } from './view';
 
 // export reducer
-export { reduxRequestReducer } from './reducer';
+export { reducer } from './reducer';
 
 const mapStateToProps = (state, ownProps) => {
   const { args, id, selector } = ownProps;
@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
   try {
     selectorResult = selector(state, { id });
   } catch (e) {
-    console.error(`The selector for "ReduxRequest#${id}" threw an error:\n`, e);
+    console.error(`The selector for "Request#${id}" threw an error:\n`, e);
     return {
       hashedArgs,
       hasError: true
@@ -22,7 +22,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   return {
-    prevHashedArgs: get(state.reduxRequest[id], 'hashedArgs'),
+    prevHashedArgs: get(state.reactReduxRequest[id], 'hashedArgs'),
     hashedArgs,
     selectorResult
   };
@@ -32,11 +32,11 @@ const mapDispatchToProps = dispatch => ({
   dispatch
 });
 
-export const ReduxRequest = connect(mapStateToProps, mapDispatchToProps)(
-  ReduxRequestView
+export const Request = connect(mapStateToProps, mapDispatchToProps)(
+  ReactReduxRequestView
 );
 
-ReduxRequest.propTypes = {
+Request.propTypes = {
   args: PropTypes.array,
   fn: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
@@ -45,7 +45,7 @@ ReduxRequest.propTypes = {
   selector: PropTypes.func
 };
 
-ReduxRequest.defaultProps = {
+Request.defaultProps = {
   args: [],
-  selector: (state, props) => state.reduxRequest[props.id]
+  selector: (state, props) => state.reactReduxRequest[props.id]
 };

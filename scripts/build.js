@@ -9,7 +9,7 @@ const { execSync } = require('child_process');
 
 process.chdir(path.resolve(__dirname, '..'));
 
-const packageName = 'redux-request';
+const packageName = 'react-redux-request';
 const packageNamePascal = pascalCase(packageName);
 
 rimraf.sync('./dist');

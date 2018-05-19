@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
-import { ReduxRequest, reduxRequestReducer } from '../src';
+import { Request, reducer } from '../src';
 
 /*
  * This example demonstrates how the component behaves when being unmounted/mounted
@@ -12,7 +12,7 @@ import { ReduxRequest, reduxRequestReducer } from '../src';
  *  If they don't match the component will re-fetch data by calling `fn` prop with new args and re-render by calling `render` prop with the result
  */
 
-const reducers = combineReducers({ reduxRequest: reduxRequestReducer });
+const reducers = combineReducers({ reactReduxRequest: reducer });
 const store = createStore(reducers, applyMiddleware(logger));
 
 class UnmountExample extends Component {
@@ -38,7 +38,7 @@ class UnmountExample extends Component {
 
 function Example() {
   return (
-    <ReduxRequest
+    <Request
       fn={() =>
         fetch(`https://jsonplaceholder.typicode.com/posts/1`).then(response =>
           response.json()
