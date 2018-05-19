@@ -9,7 +9,7 @@ Redux is great for handling application state but can result in a lot of boilerp
 ### Install
 
 ```
-npm install react-redux-request
+yarn add react-redux-request
 ```
 
 ### Getting started
