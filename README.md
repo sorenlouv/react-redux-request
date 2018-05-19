@@ -1,6 +1,6 @@
 Redux is great for handling application state but can result in a lot of boilerplate when it comes to data fetching. This component aims to reduce this boilerplate, and help you keep your components stateless.
 
-[Demo on Codepen](https://codepen.io/sqren/pen/ELwoxQ?editors=0010)
+[Demo on Codesandbox](https://codesandbox.io/s/64l7r47myn)
 
 ### Install
 
