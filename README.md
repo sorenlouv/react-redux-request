@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/sqren/react-redux-request.svg?branch=master)](https://travis-ci.org/sqren/react-redux-request)
+[![NPM version](https://img.shields.io/npm/v/react-redux-request.svg)](https://www.npmjs.com/package/react-redux-request)
+[![dependencies Status](https://david-dm.org/sqren/react-redux-request/status.svg)](https://david-dm.org/sqren/react-redux-request)
+
 Redux is great for handling application state but can result in a lot of boilerplate when it comes to data fetching. This component aims to reduce this boilerplate, and help you keep your components stateless.
 
 [Demo on Codesandbox](https://codesandbox.io/s/64l7r47myn)
