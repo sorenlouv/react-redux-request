@@ -7,7 +7,41 @@ import resolve from 'rollup-plugin-node-resolve';
 import { uglify } from 'rollup-plugin-uglify';
 import { minify } from 'uglify-es';
 
-const getPlugins = env => {
+function getBabelConfig(env) {
+  const plugins = [
+    'external-helpers',
+    [
+      'transform-runtime',
+      {
+        helpers: false,
+        polyfill: false,
+        regenerator: true
+      }
+    ]
+  ];
+
+  if (env === 'production') {
+    plugins.push(['transform-react-remove-prop-types', { removeImport: true }]);
+  }
+
+  return {
+    runtimeHelpers: true,
+    exclude: 'node_modules/**',
+    presets: [
+      'stage-1',
+      [
+        'env',
+        {
+          modules: false
+        }
+      ]
+    ],
+    plugins,
+    babelrc: false
+  };
+}
+
+function getRollupPlugins(env) {
   const plugins = [resolve()];
 
   if (env) {
@@ -22,31 +56,7 @@ const getPlugins = env => {
     commonjs({
       include: /node_modules/
     }),
-    babel({
-      runtimeHelpers: true,
-      exclude: 'node_modules/**',
-      presets: [
-        'stage-1',
-        [
-          'env',
-          {
-            modules: false
-          }
-        ]
-      ],
-      plugins: [
-        'external-helpers',
-        [
-          'transform-runtime',
-          {
-            helpers: false,
-            polyfill: false,
-            regenerator: true
-          }
-        ]
-      ],
-      babelrc: false
-    })
+    babel(getBabelConfig(env))
   );
 
   if (env === 'production') {
@@ -54,7 +64,7 @@ const getPlugins = env => {
   }
 
   return plugins;
-};
+}
 
 function getConfig() {
   const env = process.env.BUILD_ENV;
@@ -68,7 +78,7 @@ function getConfig() {
       }
     },
     external: ['react', 'react-redux', 'crypto'],
-    plugins: getPlugins(env)
+    plugins: getRollupPlugins(env)
   };
 }
 

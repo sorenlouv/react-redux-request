@@ -41,7 +41,7 @@ export const Request = connect(mapStateToProps, mapDispatchToProps)(
   ReactReduxRequestView
 );
 
-Request.propTypes = {
+Request.propTypes /* remove-proptypes */ = {
   args: PropTypes.array,
   fn: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,

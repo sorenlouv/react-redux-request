@@ -4807,7 +4807,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 var Request = connect(mapStateToProps, mapDispatchToProps)(ReactReduxRequestView);
 
-Request.propTypes = {
+Request.propTypes /* remove-proptypes */ = {
   args: propTypes.array,
   fn: propTypes.func.isRequired,
   id: propTypes.string.isRequired,
