@@ -4579,46 +4579,41 @@ var STATUS = {
   FAILURE: 'FAILURE'
 };
 
-function getStatus(type) {
-  switch (type) {
-    case ACTION_TYPES.LOADING:
-      return STATUS.LOADING;
-    case ACTION_TYPES.SUCCESS:
-      return STATUS.SUCCESS;
-    case ACTION_TYPES.FAILURE:
-      return STATUS.FAILURE;
-    default:
-      throw new Error('Unknown type:', type);
-  }
-}
-
 function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments[1];
+  var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var args = action.args,
+      id = action.id,
+      data = action.data,
+      error = action.error,
+      type = action.type;
 
-  switch (action.type) {
+  switch (type) {
     case ACTION_TYPES.LOADING:
+      return _extends({}, state, defineProperty({}, id, {
+        status: STATUS.LOADING,
+        data: lodash_get(state[id], 'data'),
+        error: lodash_get(state[id], 'error'),
+        args: args
+      }));
+
     case ACTION_TYPES.SUCCESS:
+      return _extends({}, state, defineProperty({}, id, {
+        status: STATUS.SUCCESS,
+        data: data,
+        args: args
+      }));
+
     case ACTION_TYPES.FAILURE:
-      {
-        var id = action.id,
-            data = action.data,
-            error = action.error,
-            args = action.args;
+      return _extends({}, state, defineProperty({}, id, {
+        status: STATUS.FAILURE,
+        error: error,
+        args: args
+      }));
 
-        return _extends({}, state, defineProperty({}, id, {
-          status: getStatus(action.type),
-          data: data || lodash_get(state[id], 'data'),
-          error: error || lodash_get(state[id], 'error'),
-          args: args
-        }));
-      }
     case ACTION_TYPES.UNMOUNT:
-      {
-        var _id = action.id;
+      return _extends({}, state, defineProperty({}, id, lodash_get(state[id], 'status') === STATUS.SUCCESS ? state[id] : {}));
 
-        return _extends({}, state, defineProperty({}, _id, lodash_get(state[_id], 'status') === STATUS.SUCCESS ? state[_id] : {}));
-      }
     default:
       return state;
   }

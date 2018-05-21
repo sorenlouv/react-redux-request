@@ -13,42 +13,46 @@ export const STATUS = {
   FAILURE: 'FAILURE'
 };
 
-function getStatus(type) {
+export function reducer(state = {}, action = {}) {
+  const { args, id, data, error, type } = action;
   switch (type) {
     case ACTION_TYPES.LOADING:
-      return STATUS.LOADING;
-    case ACTION_TYPES.SUCCESS:
-      return STATUS.SUCCESS;
-    case ACTION_TYPES.FAILURE:
-      return STATUS.FAILURE;
-    default:
-      throw new Error('Unknown type:', type);
-  }
-}
-
-export function reducer(state = {}, action) {
-  switch (action.type) {
-    case ACTION_TYPES.LOADING:
-    case ACTION_TYPES.SUCCESS:
-    case ACTION_TYPES.FAILURE: {
-      const { id, data, error, args } = action;
       return {
         ...state,
         [id]: {
-          status: getStatus(action.type),
-          data: data || get(state[id], 'data'),
-          error: error || get(state[id], 'error'),
+          status: STATUS.LOADING,
+          data: get(state[id], 'data'),
+          error: get(state[id], 'error'),
           args
         }
       };
-    }
-    case ACTION_TYPES.UNMOUNT: {
-      const { id } = action;
+
+    case ACTION_TYPES.SUCCESS:
+      return {
+        ...state,
+        [id]: {
+          status: STATUS.SUCCESS,
+          data,
+          args
+        }
+      };
+
+    case ACTION_TYPES.FAILURE:
+      return {
+        ...state,
+        [id]: {
+          status: STATUS.FAILURE,
+          error,
+          args
+        }
+      };
+
+    case ACTION_TYPES.UNMOUNT:
       return {
         ...state,
         [id]: get(state[id], 'status') === STATUS.SUCCESS ? state[id] : {}
       };
-    }
+
     default:
       return state;
   }
