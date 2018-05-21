@@ -9,28 +9,17 @@ function getUniqueId() {
 }
 
 async function maybeFetchData(
-  {
-    args,
-    dispatch,
-    fn,
-    hasError,
-    hashedArgs,
-    id,
-    preventFetch,
-    prevHashedArgs
-  },
+  { args, didArgsChange, dispatch, fn, id, preventFetch },
   ctx = {}
 ) {
-  const shouldFetchData =
-    !preventFetch && prevHashedArgs !== hashedArgs && !hasError;
-
+  const shouldFetchData = !preventFetch && didArgsChange;
   if (!shouldFetchData) {
     return;
   }
 
   dispatch({
+    args,
     id,
-    hashedArgs,
     type: ACTION_TYPES.LOADING
   });
   const fetchId = getUniqueId();
@@ -39,8 +28,8 @@ async function maybeFetchData(
     const data = await fn(...args);
     if (fetchId === ctx.fetchId) {
       dispatch({
+        args,
         data,
-        hashedArgs,
         id,
         type: ACTION_TYPES.SUCCESS
       });
@@ -49,8 +38,8 @@ async function maybeFetchData(
     if (fetchId === ctx.fetchId) {
       console.error(error);
       dispatch({
+        args,
         error,
-        hashedArgs,
         id,
         type: ACTION_TYPES.FAILURE
       });
@@ -77,10 +66,7 @@ export class ReactReduxRequestView extends React.Component {
   }
 
   render() {
-    const { hasError, render, selectorResult } = this.props;
-    if (hasError) {
-      return null;
-    }
+    const { render, selectorResult } = this.props;
 
     try {
       return render(selectorResult);
@@ -96,21 +82,18 @@ export class ReactReduxRequestView extends React.Component {
 
 ReactReduxRequestView.propTypes = {
   args: PropTypes.array,
+  didArgsChange: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   fn: PropTypes.func.isRequired,
-  hasError: PropTypes.bool,
-  hashedArgs: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   preventFetch: PropTypes.bool.isRequired,
-  prevHashedArgs: PropTypes.string,
   render: PropTypes.func,
   selectorResult: PropTypes.any
 };
 
 ReactReduxRequestView.defaultProps = {
   args: [],
-  hasError: false,
   preventFetch: false,
-  render: () => {},
+  render: () => null,
   selectorResult: {}
 };

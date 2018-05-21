@@ -31,14 +31,14 @@ export function reducer(state = {}, action) {
     case ACTION_TYPES.LOADING:
     case ACTION_TYPES.SUCCESS:
     case ACTION_TYPES.FAILURE: {
-      const { id, data, error, hashedArgs } = action;
+      const { id, data, error, args } = action;
       return {
         ...state,
         [id]: {
           status: getStatus(action.type),
           data: data || get(state[id], 'data'),
           error: error || get(state[id], 'error'),
-          hashedArgs
+          args
         }
       };
     }

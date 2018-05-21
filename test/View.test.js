@@ -1,11 +1,8 @@
 import React from 'react';
-import { shallow, configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
 
 import { ReactReduxRequestView } from '../src/view';
 import { ACTION_TYPES, STATUS } from '../src/reducer';
-
-configure({ adapter: new Adapter() });
 
 const resolvedPromise = (...args) => Promise.resolve(...args);
 
@@ -23,7 +20,7 @@ describe('ReactReduxRequestView', () => {
           args={['myInitialArg']}
           dispatch={dispatchSpy}
           fn={fnSpy}
-          hashedArgs="myHashedArgs"
+          didArgsChange={true}
           id="myId"
           render={renderSpy}
         />
@@ -41,7 +38,7 @@ describe('ReactReduxRequestView', () => {
         expect(dispatchSpy.mock.calls).toEqual([
           [
             {
-              hashedArgs: 'myHashedArgs',
+              args: ['myInitialArg'],
               id: 'myId',
               type: ACTION_TYPES.LOADING
             }
@@ -49,7 +46,7 @@ describe('ReactReduxRequestView', () => {
           [
             {
               data: 'myInitialArg',
-              hashedArgs: 'myHashedArgs',
+              args: ['myInitialArg'],
               id: 'myId',
               type: ACTION_TYPES.SUCCESS
             }
@@ -71,8 +68,8 @@ describe('ReactReduxRequestView', () => {
         fnSpy.mockImplementation(resolvedPromise);
 
         wrapper.setProps({
-          prevHashedArgs: 'myHashedArgs',
-          hashedArgs: 'myHashedArgs',
+          didArgsChange: false,
+          args: ['myInitialArg'],
           selectorResult: {
             status: STATUS.SUCCESS,
             data: 'myData'
@@ -108,8 +105,7 @@ describe('ReactReduxRequestView', () => {
         <ReactReduxRequestView
           args={['myInitialArg']}
           fn={fnSpy}
-          prevHashedArgs="myHashedArgs"
-          hashedArgs="myHashedArgs"
+          didArgsChange={false}
           id="myId"
           dispatch={dispatchSpy}
           render={renderSpy}
@@ -140,7 +136,7 @@ describe('ReactReduxRequestView', () => {
     describe('when args change', () => {
       beforeEach(() => {
         wrapper.setProps({
-          hashedArgs: 'myHashedArgs2',
+          didArgsChange: true,
           args: ['mySecondArg']
         });
       });
@@ -153,7 +149,7 @@ describe('ReactReduxRequestView', () => {
         expect(dispatchSpy.mock.calls).toEqual([
           [
             {
-              hashedArgs: 'myHashedArgs2',
+              args: ['mySecondArg'],
               id: 'myId',
               type: ACTION_TYPES.LOADING
             }
@@ -161,7 +157,7 @@ describe('ReactReduxRequestView', () => {
           [
             {
               data: 'mySecondArg',
-              hashedArgs: 'myHashedArgs2',
+              args: ['mySecondArg'],
               id: 'myId',
               type: ACTION_TYPES.SUCCESS
             }
@@ -186,7 +182,7 @@ describe('ReactReduxRequestView', () => {
           args={['myInitialArg']}
           preventFetch
           fn={fnSpy}
-          hashedArgs="myHashedArgs"
+          didArgsChange={true}
           id="myId"
           dispatch={() => {}}
         />
@@ -204,7 +200,7 @@ describe('ReactReduxRequestView', () => {
         <ReactReduxRequestView
           args={['myInitialArg']}
           fn={fnSpy}
-          hashedArgs="myHashedArgs"
+          didArgsChange={true}
           id="myId"
           dispatch={dispatchSpy}
         />

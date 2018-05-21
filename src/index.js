@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import hash from 'object-hash/index';
 import get from 'lodash.get';
+import isEqual from 'lodash.isequal';
 import { ReactReduxRequestView } from './view';
 
 // export reducer
@@ -9,21 +9,26 @@ export { reducer } from './reducer';
 
 const mapStateToProps = (state, ownProps) => {
   const { args, id, selector } = ownProps;
-  const hashedArgs = hash(args);
+
+  if (!state.reactReduxRequest) {
+    throw new Error(
+      'The key "reactReduxRequest" was not found in store. Did you setup your reducers?'
+    );
+  }
+
+  const prevArgs = get(state.reactReduxRequest[id], 'args');
+  const didArgsChange = !isEqual(args, prevArgs);
+
   let selectorResult;
   try {
     selectorResult = selector(state, { id });
   } catch (e) {
     console.error(`The selector for "Request#${id}" threw an error:\n`, e);
-    return {
-      hashedArgs,
-      hasError: true
-    };
+    throw new Error(e);
   }
 
   return {
-    prevHashedArgs: get(state.reactReduxRequest[id], 'hashedArgs'),
-    hashedArgs,
+    didArgsChange,
     selectorResult
   };
 };
