@@ -4567,10 +4567,10 @@ var toConsumableArray = function (arr) {
 };
 
 var ACTION_TYPES = {
-  LOADING: 'REDUX_REQUEST_LOADING',
-  SUCCESS: 'REDUX_REQUEST_SUCCESS',
-  FAILURE: 'REDUX_REQUEST_FAILURE',
-  UNMOUNT: 'REDUX_REQUEST_COMPONENT_UNMOUNT'
+  DID_INIT_REQUEST: 'REACT_REDUX_REQUEST:DID_INIT_REQUEST',
+  DID_SUCCEED: 'REACT_REDUX_REQUEST:DID_SUCCEED',
+  DID_FAIL: 'REACT_REDUX_REQUEST:DID_FAIL',
+  DID_UNMOUNT: 'REACT_REDUX_REQUEST:DID_UNMOUNT'
 };
 
 var STATUS = {
@@ -4589,29 +4589,28 @@ function reducer() {
       type = action.type;
 
   switch (type) {
-    case ACTION_TYPES.LOADING:
+    case ACTION_TYPES.DID_INIT_REQUEST:
       return _extends({}, state, defineProperty({}, id, {
         status: STATUS.LOADING,
         data: lodash_get(state[id], 'data'),
-        error: lodash_get(state[id], 'error'),
         args: args
       }));
 
-    case ACTION_TYPES.SUCCESS:
+    case ACTION_TYPES.DID_SUCCEED:
       return _extends({}, state, defineProperty({}, id, {
         status: STATUS.SUCCESS,
         data: data,
         args: args
       }));
 
-    case ACTION_TYPES.FAILURE:
+    case ACTION_TYPES.DID_FAIL:
       return _extends({}, state, defineProperty({}, id, {
         status: STATUS.FAILURE,
         error: error,
         args: args
       }));
 
-    case ACTION_TYPES.UNMOUNT:
+    case ACTION_TYPES.DID_UNMOUNT:
       return _extends({}, state, defineProperty({}, id, lodash_get(state[id], 'status') === STATUS.SUCCESS ? state[id] : {}));
 
     default:
@@ -4647,7 +4646,7 @@ var maybeFetchData = function () {
             dispatch({
               args: args,
               id: id,
-              type: ACTION_TYPES.LOADING
+              type: ACTION_TYPES.DID_INIT_REQUEST
             });
             fetchId = getUniqueId();
 
@@ -4664,7 +4663,7 @@ var maybeFetchData = function () {
                 args: args,
                 data: data,
                 id: id,
-                type: ACTION_TYPES.SUCCESS
+                type: ACTION_TYPES.DID_SUCCEED
               });
             }
             _context.next = 16;
@@ -4680,7 +4679,7 @@ var maybeFetchData = function () {
                 args: args,
                 error: _context.t0,
                 id: id,
-                type: ACTION_TYPES.FAILURE
+                type: ACTION_TYPES.DID_FAIL
               });
             }
 
@@ -4730,7 +4729,7 @@ var ReactReduxRequestView = function (_React$Component) {
 
       dispatch({
         id: id,
-        type: ACTION_TYPES.UNMOUNT
+        type: ACTION_TYPES.DID_UNMOUNT
       });
       this.fetchId = null;
     }
