@@ -22,7 +22,7 @@ describe('reducer', () => {
       reducer(initialSuccessState, {
         id: 'myId',
         args: ['myNextArg'],
-        type: ACTION_TYPES.LOADING
+        type: ACTION_TYPES.DID_INIT_REQUEST
       })
     ).toEqual({
       myId: {
@@ -39,7 +39,7 @@ describe('reducer', () => {
         id: 'myId',
         args: ['myNextArg'],
         data: 'myNextData',
-        type: ACTION_TYPES.SUCCESS
+        type: ACTION_TYPES.DID_SUCCEED
       })
     ).toEqual({
       myId: {
@@ -56,7 +56,7 @@ describe('reducer', () => {
         id: 'myId',
         args: ['myNextArg'],
         error: 'myNextError',
-        type: ACTION_TYPES.FAILURE
+        type: ACTION_TYPES.DID_FAIL
       })
     ).toEqual({
       myId: {
@@ -72,7 +72,7 @@ describe('reducer', () => {
       expect(
         reducer(initialSuccessState, {
           id: 'myId',
-          type: ACTION_TYPES.UNMOUNT
+          type: ACTION_TYPES.DID_UNMOUNT
         })
       ).toEqual({
         myId: {
@@ -87,7 +87,7 @@ describe('reducer', () => {
       expect(
         reducer(initialFailureState, {
           id: 'myId',
-          type: ACTION_TYPES.UNMOUNT
+          type: ACTION_TYPES.DID_UNMOUNT
         })
       ).toEqual({
         myId: {}

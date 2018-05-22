@@ -20,7 +20,7 @@ async function maybeFetchData(
   dispatch({
     args,
     id,
-    type: ACTION_TYPES.LOADING
+    type: ACTION_TYPES.DID_INIT_REQUEST
   });
   const fetchId = getUniqueId();
   ctx.fetchId = fetchId;
@@ -31,7 +31,7 @@ async function maybeFetchData(
         args,
         data,
         id,
-        type: ACTION_TYPES.SUCCESS
+        type: ACTION_TYPES.DID_SUCCEED
       });
     }
   } catch (error) {
@@ -41,7 +41,7 @@ async function maybeFetchData(
         args,
         error,
         id,
-        type: ACTION_TYPES.FAILURE
+        type: ACTION_TYPES.DID_FAIL
       });
     }
   }
@@ -60,7 +60,7 @@ export class ReactReduxRequestView extends React.Component {
     const { dispatch, id } = this.props;
     dispatch({
       id,
-      type: ACTION_TYPES.UNMOUNT
+      type: ACTION_TYPES.DID_UNMOUNT
     });
     this.fetchId = null;
   }

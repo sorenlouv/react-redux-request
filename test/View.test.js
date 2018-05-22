@@ -40,7 +40,7 @@ describe('ReactReduxRequestView', () => {
             {
               args: ['myInitialArg'],
               id: 'myId',
-              type: ACTION_TYPES.LOADING
+              type: ACTION_TYPES.DID_INIT_REQUEST
             }
           ],
           [
@@ -48,7 +48,7 @@ describe('ReactReduxRequestView', () => {
               data: 'myInitialArg',
               args: ['myInitialArg'],
               id: 'myId',
-              type: ACTION_TYPES.SUCCESS
+              type: ACTION_TYPES.DID_SUCCEED
             }
           ]
         ]);
@@ -151,7 +151,7 @@ describe('ReactReduxRequestView', () => {
             {
               args: ['mySecondArg'],
               id: 'myId',
-              type: ACTION_TYPES.LOADING
+              type: ACTION_TYPES.DID_INIT_REQUEST
             }
           ],
           [
@@ -159,7 +159,7 @@ describe('ReactReduxRequestView', () => {
               data: 'mySecondArg',
               args: ['mySecondArg'],
               id: 'myId',
-              type: ACTION_TYPES.SUCCESS
+              type: ACTION_TYPES.DID_SUCCEED
             }
           ]
         ]);
@@ -209,7 +209,7 @@ describe('ReactReduxRequestView', () => {
       wrapper.unmount();
       expect(dispatchSpy).toHaveBeenCalledWith({
         id: 'myId',
-        type: 'REDUX_REQUEST_COMPONENT_UNMOUNT'
+        type: ACTION_TYPES.DID_UNMOUNT
       });
     });
   });

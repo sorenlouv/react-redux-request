@@ -1,10 +1,10 @@
 import get from 'lodash.get';
 
 export const ACTION_TYPES = {
-  LOADING: 'REDUX_REQUEST_LOADING',
-  SUCCESS: 'REDUX_REQUEST_SUCCESS',
-  FAILURE: 'REDUX_REQUEST_FAILURE',
-  UNMOUNT: 'REDUX_REQUEST_COMPONENT_UNMOUNT'
+  DID_INIT_REQUEST: 'REACT_REDUX_REQUEST:DID_INIT_REQUEST',
+  DID_SUCCEED: 'REACT_REDUX_REQUEST:DID_SUCCEED',
+  DID_FAIL: 'REACT_REDUX_REQUEST:DID_FAIL',
+  DID_UNMOUNT: 'REACT_REDUX_REQUEST:DID_UNMOUNT'
 };
 
 export const STATUS = {
@@ -16,18 +16,17 @@ export const STATUS = {
 export function reducer(state = {}, action = {}) {
   const { args, id, data, error, type } = action;
   switch (type) {
-    case ACTION_TYPES.LOADING:
+    case ACTION_TYPES.DID_INIT_REQUEST:
       return {
         ...state,
         [id]: {
           status: STATUS.LOADING,
           data: get(state[id], 'data'),
-          error: get(state[id], 'error'),
           args
         }
       };
 
-    case ACTION_TYPES.SUCCESS:
+    case ACTION_TYPES.DID_SUCCEED:
       return {
         ...state,
         [id]: {
@@ -37,7 +36,7 @@ export function reducer(state = {}, action = {}) {
         }
       };
 
-    case ACTION_TYPES.FAILURE:
+    case ACTION_TYPES.DID_FAIL:
       return {
         ...state,
         [id]: {
@@ -47,7 +46,7 @@ export function reducer(state = {}, action = {}) {
         }
       };
 
-    case ACTION_TYPES.UNMOUNT:
+    case ACTION_TYPES.DID_UNMOUNT:
       return {
         ...state,
         [id]: get(state[id], 'status') === STATUS.SUCCESS ? state[id] : {}
