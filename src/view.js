@@ -66,10 +66,8 @@ export class ReactReduxRequestView extends React.Component {
   }
 
   render() {
-    const { render, selectorResult } = this.props;
-
     try {
-      return render(selectorResult);
+      return this.props.render(this.props.selectorResult);
     } catch (e) {
       console.error(
         `The render method of "Request#${this.props.id}" threw an error:\n`,

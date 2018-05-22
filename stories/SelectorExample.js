@@ -2,7 +2,7 @@ import React from 'react';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
-import { Request, reducer } from '../src';
+import { Request, reducer, getRequestState } from '../src';
 
 /*
  * This example demonstrates how you can use selectors to return a custom response to the render callback
@@ -22,7 +22,7 @@ export default function SelectorExample() {
           )
         }
         id="post-1"
-        selector={(state, props) => state.reactReduxRequest[props.id]}
+        selector={(state, props) => getRequestState(state, props.id)}
         render={({ status, data, error }) => (
           <div>
             <div>Status: {status}</div>

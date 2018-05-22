@@ -4,19 +4,29 @@ import get from 'lodash.get';
 import isEqual from 'lodash.isequal';
 import { ReactReduxRequestView } from './view';
 
+const STATE_KEY = 'reactReduxRequest';
+
+export function getRequestState(state, id) {
+  if (id) {
+    return state[STATE_KEY][id];
+  }
+
+  return state[STATE_KEY];
+}
+
 // export reducer
 export { reducer } from './reducer';
 
 const mapStateToProps = (state, ownProps) => {
   const { args, id, selector } = ownProps;
 
-  if (!state.reactReduxRequest) {
+  if (!state[STATE_KEY]) {
     throw new Error(
-      'The key "reactReduxRequest" was not found in store. Did you setup your reducers?'
+      `The key "${STATE_KEY}" was not found in store. Did you setup your reducers?`
     );
   }
 
-  const prevArgs = get(state.reactReduxRequest[id], 'args');
+  const prevArgs = get(state[STATE_KEY][id], 'args');
   const didArgsChange = !isEqual(args, prevArgs);
 
   let selectorResult;
@@ -52,5 +62,5 @@ Request.propTypes /* remove-proptypes */ = {
 
 Request.defaultProps = {
   args: [],
-  selector: (state, props) => state.reactReduxRequest[props.id]
+  selector: (state, props) => state[STATE_KEY][props.id]
 };

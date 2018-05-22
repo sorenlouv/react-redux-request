@@ -4687,13 +4687,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props2 = this.props,
-	          render = _props2.render,
-	          selectorResult = _props2.selectorResult;
-
-
 	      try {
-	        return render(selectorResult);
+	        return this.props.render(this.props.selectorResult);
 	      } catch (e) {
 	        console.error('The render method of "Request#' + this.props.id + '" threw an error:\n', e);
 	        return null;
@@ -4723,17 +4718,27 @@
 	  selectorResult: {}
 	};
 
+	var STATE_KEY = 'reactReduxRequest';
+
+	function getRequestState(state, id) {
+	  if (id) {
+	    return state[STATE_KEY][id];
+	  }
+
+	  return state[STATE_KEY];
+	}
+
 	var mapStateToProps = function mapStateToProps(state, ownProps) {
 	  var args = ownProps.args,
 	      id = ownProps.id,
 	      selector = ownProps.selector;
 
 
-	  if (!state.reactReduxRequest) {
-	    throw new Error('The key "reactReduxRequest" was not found in store. Did you setup your reducers?');
+	  if (!state[STATE_KEY]) {
+	    throw new Error('The key "' + STATE_KEY + '" was not found in store. Did you setup your reducers?');
 	  }
 
-	  var prevArgs = lodash_get(state.reactReduxRequest[id], 'args');
+	  var prevArgs = lodash_get(state[STATE_KEY][id], 'args');
 	  var didArgsChange = !lodash_isequal(args, prevArgs);
 
 	  var selectorResult = void 0;
@@ -4770,10 +4775,11 @@
 	Request.defaultProps = {
 	  args: [],
 	  selector: function selector(state, props) {
-	    return state.reactReduxRequest[props.id];
+	    return state[STATE_KEY][props.id];
 	  }
 	};
 
+	exports.getRequestState = getRequestState;
 	exports.Request = Request;
 	exports.reducer = reducer;
 
