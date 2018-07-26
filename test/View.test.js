@@ -15,12 +15,18 @@ describe('ReactReduxRequestView', () => {
       renderSpy = jest.fn();
       dispatchSpy = jest.fn();
 
+      const store = {
+        getState: () => ({
+          reactReduxRequest: {}
+        })
+      };
+
       wrapper = shallow(
         <ReactReduxRequestView
+          store={store}
           args={['myInitialArg']}
           dispatch={dispatchSpy}
           fn={fnSpy}
-          didArgsChange={true}
           id="myId"
           render={renderSpy}
         />
@@ -67,13 +73,24 @@ describe('ReactReduxRequestView', () => {
         renderSpy.mockReset();
         fnSpy.mockImplementation(resolvedPromise);
 
-        wrapper.setProps({
-          didArgsChange: false,
-          args: ['myInitialArg'],
-          selectorResult: {
-            status: STATUS.SUCCESS,
-            data: 'myData'
+        const state = {
+          reactReduxRequest: {
+            myId: {
+              status: STATUS.SUCCESS,
+              data: 'myData',
+              args: ['myInitialArg']
+            }
           }
+        };
+
+        const store = {
+          getState: () => state
+        };
+
+        wrapper.setProps({
+          args: ['myInitialArg'],
+          store,
+          selectorResult: state.reactReduxRequest.myId
         });
       });
 
@@ -87,7 +104,14 @@ describe('ReactReduxRequestView', () => {
 
       it('should render data', () => {
         expect(renderSpy.mock.calls).toEqual([
-          [{ data: 'myData', error: undefined, status: 'SUCCESS' }]
+          [
+            {
+              data: 'myData',
+              error: undefined,
+              status: 'SUCCESS',
+              args: ['myInitialArg']
+            }
+          ]
         ]);
       });
     });
@@ -101,18 +125,29 @@ describe('ReactReduxRequestView', () => {
       renderSpy = jest.fn();
       dispatchSpy = jest.fn();
 
+      const state = {
+        reactReduxRequest: {
+          myId: {
+            status: STATUS.SUCCESS,
+            data: 'myData',
+            args: ['myInitialArg']
+          }
+        }
+      };
+
+      const store = {
+        getState: () => state
+      };
+
       wrapper = shallow(
         <ReactReduxRequestView
+          store={store}
           args={['myInitialArg']}
           fn={fnSpy}
-          didArgsChange={false}
           id="myId"
           dispatch={dispatchSpy}
           render={renderSpy}
-          selectorResult={{
-            status: STATUS.SUCCESS,
-            data: 'myData'
-          }}
+          selectorResult={state.reactReduxRequest.myId}
         />
       );
     });
@@ -128,7 +163,14 @@ describe('ReactReduxRequestView', () => {
 
       it('should render SUCCESS', () => {
         expect(renderSpy.mock.calls).toEqual([
-          [{ data: 'myData', error: undefined, status: 'SUCCESS' }]
+          [
+            {
+              data: 'myData',
+              error: undefined,
+              status: 'SUCCESS',
+              args: ['myInitialArg']
+            }
+          ]
         ]);
       });
     });
@@ -136,7 +178,6 @@ describe('ReactReduxRequestView', () => {
     describe('when args change', () => {
       beforeEach(() => {
         wrapper.setProps({
-          didArgsChange: true,
           args: ['mySecondArg']
         });
       });
@@ -167,8 +208,8 @@ describe('ReactReduxRequestView', () => {
 
       it('should render SUCCESS', () => {
         expect(renderSpy.mock.calls).toEqual([
-          [{ data: 'myData', status: 'SUCCESS' }],
-          [{ data: 'myData', status: 'SUCCESS' }]
+          [{ data: 'myData', status: 'SUCCESS', args: ['myInitialArg'] }],
+          [{ data: 'myData', status: 'SUCCESS', args: ['myInitialArg'] }]
         ]);
       });
     });
@@ -177,12 +218,17 @@ describe('ReactReduxRequestView', () => {
   describe('when preventFetch is true', () => {
     it('should not call fnSpy', () => {
       const fnSpy = jest.fn(resolvedPromise);
+      const store = {
+        getState: () => ({
+          reactReduxRequest: {}
+        })
+      };
       shallow(
         <ReactReduxRequestView
+          store={store}
           args={['myInitialArg']}
           preventFetch
           fn={fnSpy}
-          didArgsChange={true}
           id="myId"
           dispatch={() => {}}
         />
@@ -194,13 +240,19 @@ describe('ReactReduxRequestView', () => {
 
   describe('when component unmounts', () => {
     it('should dispatch an unmount action', () => {
+      const store = {
+        getState: () => ({
+          reactReduxRequest: {}
+        })
+      };
+
       const fnSpy = jest.fn(resolvedPromise);
       const dispatchSpy = jest.fn();
       const wrapper = shallow(
         <ReactReduxRequestView
+          store={store}
           args={['myInitialArg']}
           fn={fnSpy}
-          didArgsChange={true}
           id="myId"
           dispatch={dispatchSpy}
         />

@@ -1,10 +1,7 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import get from 'lodash.get';
-import isEqual from 'lodash.isequal';
 import { ReactReduxRequestView } from './view';
-
-const STATE_KEY = 'reactReduxRequest';
+import { STATE_KEY } from './helpers';
 
 export function getRequestState(state, id) {
   if (id) {
@@ -18,16 +15,13 @@ export function getRequestState(state, id) {
 export { reducer } from './reducer';
 
 const mapStateToProps = (state, ownProps) => {
-  const { args, id, selector } = ownProps;
+  const { id, selector } = ownProps;
 
   if (!state[STATE_KEY]) {
     throw new Error(
       `The key "${STATE_KEY}" was not found in store. Did you setup your reducers?`
     );
   }
-
-  const prevArgs = get(state[STATE_KEY][id], 'args');
-  const didArgsChange = !isEqual(args, prevArgs);
 
   let selectorResult;
   try {
@@ -38,18 +32,11 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   return {
-    didArgsChange,
     selectorResult
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  dispatch
-});
-
-export const Request = connect(mapStateToProps, mapDispatchToProps)(
-  ReactReduxRequestView
-);
+export const Request = connect(mapStateToProps)(ReactReduxRequestView);
 
 Request.propTypes /* remove-proptypes */ = {
   args: PropTypes.array,

@@ -26,7 +26,6 @@ describe('Connected component', () => {
         expect.objectContaining({
           args: ['myInitialArg'],
           id: 'myId',
-          didArgsChange: true,
           preventFetch: false,
           selectorResult: {},
           fn: fnSpy
@@ -61,7 +60,6 @@ describe('Connected component', () => {
         expect.objectContaining({
           args: ['myInitialArg'],
           id: 'myId',
-          didArgsChange: false,
           preventFetch: false,
           selectorResult: {
             data: 'someData',
