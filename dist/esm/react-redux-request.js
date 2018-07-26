@@ -4648,7 +4648,8 @@ var ReactReduxRequestView = function (_React$Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 _props = this.props, args = _props.args, dispatch = _props.dispatch, fn = _props.fn, id = _props.id, preventFetch = _props.preventFetch;
-                // it is necessary to re-check whether args changed in case another component simultanously initiated a request
+                // it is necessary to check whether args changed from the latest state,
+                // in case another component simultanously initiated a request
 
                 state = (this.context.store || this.props.store).getState();
                 didArgsChange = getDidArgsChange(state, args, id);
